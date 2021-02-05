@@ -62,18 +62,14 @@ def main():
         date = datetime.now()
         bitcoin_history.append({'date': date, 'price': price})
 
-        # Send an emergency notification
         if price < BITCOIN_PRICE_THRESHOLD:
             post_ifttt_webhook('bitcoin_price_emergency', price)
 
-        # Send a Telegram notification
-        if len(bitcoin_history) == 5:  # Once we have 5 items in our bitcoin_history send an update
+        if len(bitcoin_history) == 5:
             post_ifttt_webhook('bitcoin_price_update',
                                format_bitcoin_history(bitcoin_history))
-            # Reset the history
             bitcoin_history = []
 
-        # Sleep for 1 minutes 
         time.sleep(1 * 60)
 
 
